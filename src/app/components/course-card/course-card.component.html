@@ -1,0 +1,37 @@
+<div class="course-card" [ngClass]="getClass()">
+  <div class="course-title" [ngStyle]="getStyles()">
+    {{ index }} - {{ course.description }}
+  </div>
+
+  <ng-content select="img" *ngIf="course.iconUrl; else noImage" />
+
+  <ng-template #noImage>
+    <ng-container
+      *ngTemplateOutlet="
+        noImageTemplate;
+        context: { description: course.description }
+      "
+    />
+  </ng-template>
+
+  <ng-content select=".course-description" />
+
+  <ng-content />
+
+  @switch (course.category) { 
+    @case ("BEGINNER") {
+      <div>Beginner</div>
+    } 
+    @case ("INTERMEDIATE") {
+      <div>Intermediate</div>
+    } 
+    @case ("ADVANCED") {
+      <div>Advanced</div>
+    } 
+    @default {
+      98<div>No category</div>
+    } 
+  }
+
+  <button (click)="handleViewCourse()">View course</button>
+</div>
